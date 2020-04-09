@@ -1,0 +1,38 @@
+[1] data type
+
+1. time
+1) 00:00:000
+- minute:second:millisecond
+
+2. color
+1) r
+- red
+2) g
+- green
+3) b
+- blue
+
+3. position
+1) 0,0
+- x position, y position
+
+4. note type
+1) (none)
+- normal note
+2) l
+- long note
+
+
+
+[2] combine
+
+1. normal note
+1) 00:00:000/r/0,0
+- time/color/position
+
+//not now
+2. long note
+1) 00:00:000/r/0,0/l
+- time/color/position
+
+* each notes are seperate by LF/CL
