@@ -16,6 +16,8 @@ public class game_main : MonoBehaviour
     List<string> each_notes_data = new List<string>();
     List<int> each_notes_data_millisecond_time = new List<int>();
 
+    public static int score = 0;
+
     void Start()
     {
         stopwatch.Start();
@@ -40,13 +42,50 @@ public class game_main : MonoBehaviour
     void FixedUpdate()
     {
         note_sequence_parser();
-        UnityEngine.Debug.Log(stopwatch.ElapsedMilliseconds);
     }
 
-    public void button()
+    void Update()
     {
-        note_sequence_parser();
+        GameObject.Find("score").GetComponent<Text>().text = score.ToString();
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition).origin, transform.forward);
+            if (hit.transform != null)
+            {
+                if (hit.transform.name.Contains("note"))
+                {
+                    hit.transform.GetComponent<note_main>().check("r");
+                }
+            }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition).origin, transform.forward);
+            if (hit.transform != null)
+            {
+                if (hit.transform.name.Contains("note"))
+                {
+                    hit.transform.GetComponent<note_main>().check("g");
+                }
+            }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition).origin, transform.forward);
+            if (hit.transform != null)
+            {
+                if (hit.transform.name.Contains("note"))
+                {
+                    hit.transform.GetComponent<note_main>().check("b");
+                }
+            }
+        }
     }
+
+    float y_position = 0;
 
     void instantiate_note(int position_x, int position_y, string color)
     {
@@ -74,7 +113,8 @@ public class game_main : MonoBehaviour
         }
 
         GameObject buffer = Instantiate(note, GameObject.Find("game_area").transform);
-        buffer.transform.localPosition = new Vector2(convert_position_x, convert_position_y);
+        buffer.transform.localPosition = new Vector3(convert_position_x, convert_position_y, y_position);
+        y_position += 0.01f;
         buffer.GetComponent<Image>().color = convert_color;
     }
 
